@@ -44,15 +44,18 @@ while start:
             player = pygame.rect.Rect(x, y, 50, 50)
             pygame.draw.rect(screen, (255, 0, 0), player)
             for i in range(len(barriers)):
-                wall_1 = pygame.rect.Rect(barriers[i], 0, 50, randomnr[i])            # przeszkoda góra######################
+                wall_1 = pygame.rect.Rect(barriers[i], 0, 50, randomnr[i])                          # przeszkoda góra
                 wall_2 = pygame.rect.Rect(barriers[i], randomnr[i] + 200, 50, 300 - randomnr[i])    # przeszkoda dół
                 pygame.draw.rect(screen, (0, 0, 150), wall_1)
                 pygame.draw.rect(screen, (0, 0, 150), wall_2)
                 barriers[i] -= 5                                               # przesuwanie się przeszkód
                 if barriers[i] == -200:
                     barriers[i] = 1000
-                    randomnr[i] = random.randint(100, 200)                                            #######################
-            text = font.render(str(points), True, [0, 0, 0])  # tworzenie wartości
+                    randomnr[i] = random.randint(100, 200)
+            for i in range(len(barriers)):
+                if x == barriers[i]+50:
+                    points += 1
+            text = font.render(str(points), True, [0, 0, 0])                   # tworzenie wartości
             screen.blit(text, [488, 50])                                       # wyświetlanie wartości
             pygame.display.update()
             pygame.time.Clock().tick(30)
@@ -70,10 +73,10 @@ while start:
             barriers[i] = 1000
             randomnr[i] = random.randint(100, 200)
     for i in range(len(barriers)):
-        if x == barriers[i]:
+        if x == barriers[i]+50:
             points += 1
-    text = font.render(str(points), True, [0, 0, 0])  # tworzenie wartości
-    screen.blit(text, [488, 50])                                                               # wyświetlanie wartości
+    text = font.render(str(points), True, [0, 0, 0])                           # tworzenie wartości
+    screen.blit(text, [488, 50])                                               # wyświetlanie wartości
     pygame.display.update()
 
     for i in range(len(barriers)):
