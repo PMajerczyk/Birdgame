@@ -18,11 +18,19 @@ pygame.init()
 pygame.font.init()
 screen = pygame.display.set_mode((1000,500))              # tworzenie okna
 image = pygame.image.load('Background.png')               # załadowanie tła
-player = pygame.rect.Rect(x,y,50,50)                      # tworzenie gracza
 font = pygame.font.SysFont("Comic Sans MS", 48)
 font1 = pygame.font.SysFont("Comic Sans MS", 16)          # czcionka i rozmiar
 for i in range(len(randomnr)):
-    randomnr[i] = random.randint(100, 200)                # losowanie wysokości
+    randomnr[i] = random.randint(50, 250)                 # losowanie wysokości
+
+def character():                                          # rysowanie gracza
+    player = pygame.rect.Rect(x, y, 50, 50)
+    pygame.draw.rect(screen, (255,0,0), player)
+    pygame.draw.circle(screen, (250,250,250), (x+33,y+12), 8)
+    pygame.draw.circle(screen, (250,250,250), (x+17,y+12), 8)
+    pygame.draw.circle(screen, (0, 0, 0), (x+33, y+12), 2)
+    pygame.draw.circle(screen, (0, 0, 0), (x+17, y+12), 2)
+    pygame.draw.polygon(screen,(222, 175, 20),[(x+20,y+20),(x+30,y+20),(x+25,y+30)])
 
 while start:
     for exit in pygame.event.get():
@@ -38,8 +46,7 @@ while start:
             jump -= 5
             screen.blit(image, (0, 0))                                         # rysowanie tła
             pygame.display.flip()
-            player = pygame.rect.Rect(x, y, 50, 50)
-            pygame.draw.rect(screen, (255, 0, 0), player)                      # rysowanie gracza
+            character()
             for i in range(len(barriers)):
                 wall_1 = pygame.rect.Rect(barriers[i], 0, 50, randomnr[i])
                 wall_2 = pygame.rect.Rect(barriers[i],randomnr[i]+200,50,300-randomnr[i])
@@ -48,7 +55,7 @@ while start:
                 barriers[i] -= 5                                               # przesuwanie się przeszkód
                 if barriers[i] == -200:
                     barriers[i] = 1000                                         # przenoszenie przeszkody na koniec
-                    randomnr[i] = random.randint(100, 200)
+                    randomnr[i] = random.randint(50, 250)
                 if x == barriers[i]+50:
                     points += 1                                                # liczenie pkt
             text = font.render(str(points), True, [0, 0, 0])
@@ -60,10 +67,9 @@ while start:
             pygame.display.update()
             pygame.time.Clock().tick(30)
     pygame.time.Clock().tick(30)
-    player = pygame.rect.Rect(x, y, 50, 50)
     screen.blit(image, (0, 0))                                                 # rysowanie tła
     pygame.display.flip()
-    pygame.draw.rect(screen,(255, 0, 0),player)                                # rysowanie gracza
+    character()
     for i in range(len(barriers)):
         wall_1 = pygame.rect.Rect(barriers[i], 0, 50, randomnr[i])
         wall_2 = pygame.rect.Rect(barriers[i],randomnr[i]+200,50,300-randomnr[i])
@@ -72,7 +78,7 @@ while start:
         barriers[i] -= 5                                                       # przesuwanie się przeszkód
         if barriers[i] == -200:
             barriers[i] = 1000                                                 # przenoszenie przeszkody na koniec
-            randomnr[i] = random.randint(100, 200)
+            randomnr[i] = random.randint(50, 250)
         if x == barriers[i]+50:
             points += 1                                                        # liczenie pkt
     text = font.render(str(points), True, [0, 0, 0])
@@ -91,8 +97,7 @@ while start:
                 bestscore = points
                 screen.blit(image, (0, 0))                                     # rysowanie tła
                 pygame.display.flip()
-                player = pygame.rect.Rect(x, y, 50, 50)
-                pygame.draw.rect(screen, (255, 0, 0), player)                  # rysownaie gracza
+                character()
                 for i in range(len(barriers)):
                     wall_1 = pygame.rect.Rect(barriers[i], 0, 50, randomnr[i])
                     wall_2 = pygame.rect.Rect(barriers[i],randomnr[i]+200,50,300-randomnr[i])
@@ -101,7 +106,7 @@ while start:
                     barriers[i] -= 5                                           # przesuwanie się przeszkód
                     if barriers[i] == -200:
                         barriers[i] = 1000                                     # przenoszenie przeszkody na koniec
-                        randomnr[i] = random.randint(100, 200)
+                        randomnr[i] = random.randint(50, 250)
                 text = font.render(str(points), True, [0, 0, 0])
                 screen.blit(text, [488, 40])                                   # wyświetlanie pkt
                 text1 = font.render(str(bestscore), True, [0, 0, 0])
@@ -120,5 +125,5 @@ while start:
                     points = 0
                     for i in range(len(randomnr)):                             # losowanie wyskokości
                         pygame.time.Clock().tick(6)                            # opóźnienie
-                        randomnr[i] = random.randint(100, 200)
+                        randomnr[i] = random.randint(50, 250)
                     break
